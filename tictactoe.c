@@ -24,7 +24,7 @@
 #define MACRO_FAN false
 
 #if MACRO_FAN
-    #define flush_stdin() puts("flush macro"); while(getc(stdin)!='\n') continue
+    #define flush_stdin() while(getc(stdin)!='\n') continue
     #define clear_screen() int lines=25; while(--lines) puts("")
 #endif
 
