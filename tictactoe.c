@@ -1,4 +1,4 @@
-//file:             tictactoe.c
+//file:             tictactoe.c 
 //Author:           Osmar D. G.
 //Compile and run. Copy and paste any of the next two lines in the
 //terminal where you save this file:
@@ -15,18 +15,10 @@
 // Compiler for Windows users:
 // http://www.smorgasbordet.com/pellesc/ (C99 and C11 comformant dev suite!).
 
-#include <stdio.h>   //IO
-#include <stdbool.h> //ISO C Standard:  7.16  Boolean type and values
-#include <iso646.h>  //ISO C Standard:  7.9  Alternative spellings
-#include <ctype.h>   //isdigit
-
-
-#define MACRO_FAN false
-
-#if MACRO_FAN
-    #define flush_stdin() while(getc(stdin)!='\n') continue
-    #define clear_screen() int lines=25; while(--lines) puts("")
-#endif
+#include <stdio.h>   // IO
+#include <stdbool.h> // ISO C Standard:  7.16  Boolean type and values
+#include <iso646.h>  // ISO C Standard:  7.9  Alternative spellings
+#include <ctype.h>   // isdigit
 
 //Typedef a type for the matrix
 typedef char charmat3x3_t [3][3];
@@ -37,6 +29,7 @@ const struct Players_
   char name [2][15]; //
   char figure [2];   // 'O' or 'X'
 }
+
 who_plays =
 {
     .name = { {"Player 1"}, {"Player 2"} },
@@ -50,13 +43,15 @@ who_plays =
 //Usage:
 //get_board_square(&board)[index] = 'figure' (X or O).
 //I was tempted to make this a macro
-static
-char* get_board_square(charmat3x3_t* restrict matrix) { return ((char*)&(*matrix)); }
+//The optimizer probably will inline 'get_board_square'
+static char* get_board_square(charmat3x3_t* restrict matrix) { return ((char*)&(*matrix)); }
 
-#if not MACRO_FAN
-    static void flush_stdin(void) { while(getc(stdin)!='\n') continue; }
-    static void clear_screen(void) { int lines=25; while(--lines) puts(""); }
-#endif
+//Uncomment the next line and commenting 'get_board_square' above for testing the inline keyword 
+//with your compiler
+//inline char* get_board_square(charmat3x3_t* restrict matrix) { return ((char*)&(*matrix)); }
+static void flush_stdin(void) { while(getc(stdin)!='\n') continue; }
+static void clear_screen(void) { int lines=25; while(--lines) puts(""); }
+
 
 int read_int(const char * restrict prompt)
 {
@@ -165,3 +160,4 @@ int main(void)
     else
         puts("Boring!! It's draw....\n\n");
 }
+
